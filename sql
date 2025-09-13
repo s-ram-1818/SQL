@@ -1,4 +1,4 @@
-SQL Joins Explained with Examples
+SQL Joins – Interview Cheat Sheet
 
 Sample Tables:
 
@@ -15,9 +15,9 @@ dept_id | dept_name
 102     | IT
 104     | Finance
 
+--------------------------------------------------
 1. INNER JOIN
-Returns only rows that have matching values in both tables.
-
+Definition: Returns only rows with matching values in both tables.
 SQL:
 SELECT e.emp_id, e.emp_name, d.dept_name
 FROM Employees e
@@ -29,9 +29,9 @@ emp_id | emp_name | dept_name
 1      | Alice    | HR
 2      | Bob      | IT
 
-2. LEFT JOIN
-Returns all rows from the left table, and matching rows from the right table. If no match, NULL is returned.
-
+--------------------------------------------------
+2. LEFT JOIN (LEFT OUTER JOIN)
+Definition: Returns all rows from the left table + matching rows from right table; NULL if no match.
 SQL:
 SELECT e.emp_id, e.emp_name, d.dept_name
 FROM Employees e
@@ -45,9 +45,9 @@ emp_id | emp_name | dept_name
 3      | Charlie  | NULL
 4      | David    | NULL
 
-3. RIGHT JOIN
-Returns all rows from the right table, and matching rows from the left table. If no match, NULL is returned.
-
+--------------------------------------------------
+3. RIGHT JOIN (RIGHT OUTER JOIN)
+Definition: Returns all rows from the right table + matching rows from left table; NULL if no match.
 SQL:
 SELECT e.emp_id, e.emp_name, d.dept_name
 FROM Employees e
@@ -60,9 +60,9 @@ emp_id | emp_name | dept_name
 2      | Bob      | IT
 NULL   | NULL     | Finance
 
+--------------------------------------------------
 4. FULL OUTER JOIN
-Returns all rows when there is a match in either left or right table. (Simulated using UNION in MySQL)
-
+Definition: Returns all rows when there is a match in either left or right table. (Use UNION in MySQL)
 SQL:
 SELECT e.emp_id, e.emp_name, d.dept_name
 FROM Employees e
@@ -80,15 +80,15 @@ emp_id | emp_name | dept_name
 4      | David    | NULL
 NULL   | NULL     | Finance
 
+--------------------------------------------------
 5. CROSS JOIN
-Returns Cartesian product of both tables.
-
+Definition: Returns Cartesian product of two tables (all combinations).
 SQL:
 SELECT e.emp_name, d.dept_name
 FROM Employees e
 CROSS JOIN Departments d;
 
-Output:
+Output (partial):
 emp_name | dept_name
 Alice    | HR
 Alice    | IT
@@ -103,20 +103,61 @@ David    | HR
 David    | IT
 David    | Finance
 
+--------------------------------------------------
 6. SELF JOIN
-Joins a table with itself. Example: finding employees in the same department.
+Definition: Joins a table with itself, useful for hierarchical data (e.g., employees and their managers).
 
-SQL:
-SELECT e1.emp_name AS Employee, e2.emp_name AS Colleague, e1.dept_id
-FROM Employees e1
-JOIN Employees e2
-ON e1.dept_id = e2.dept_id
-AND e1.emp_id <> e2.emp_id;
+Sample Employees Table with manager_id:
+emp_id | emp_name  | manager_id
+1      | Alice     | NULL
+2      | Bob       | 1
+3      | Charlie   | 1
+4      | David     | 2
+5      | Eva       | 2
+
+SQL Example: Find Employees and Their Managers
+SELECT e.emp_name AS Employee, m.emp_name AS Manager
+FROM Employees e
+LEFT JOIN Employees m
+ON e.manager_id = m.emp_id;
 
 Output:
-(No output here because only one employee per department in this dataset)
+Employee | Manager
+Alice    | NULL
+Bob      | Alice
+Charlie  | Alice
+David    | Bob
+Eva      | Bob
 
-Summary of Joins:
+--------------------------------------------------
+7. NATURAL JOIN
+Definition: Automatically joins tables on columns with the same name.
+SQL:
+SELECT *
+FROM Employees
+NATURAL JOIN Departments;
+
+Output:
+emp_id | emp_name | dept_id | dept_name
+1      | Alice    | 101     | HR
+2      | Bob      | 102     | IT
+
+--------------------------------------------------
+8. JOIN USING
+Definition: Join tables using a specific column with same name.
+SQL:
+SELECT e.emp_id, e.emp_name, d.dept_name
+FROM Employees e
+JOIN Departments d
+USING (dept_id);
+
+Output:
+emp_id | emp_name | dept_name
+1      | Alice    | HR
+2      | Bob      | IT
+
+--------------------------------------------------
+Summary Table:
 
 Join Type        | Description
 -----------------|--------------------------------------
@@ -125,4 +166,6 @@ LEFT JOIN        | All left + matching right
 RIGHT JOIN       | All right + matching left
 FULL OUTER JOIN  | All rows from both sides
 CROSS JOIN       | Cartesian product
-SELF JOIN        | Join table with itself
+SELF JOIN        | Join table with itself (hierarchical)
+NATURAL JOIN     | Join on columns with same name automatically
+JOIN ... USING   | Join on specific column with same name
