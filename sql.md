@@ -241,8 +241,3 @@ emp_id | emp_name | dept_name
 ```
 
 ---
-
-
-
-Do you want me to do that?
-```
