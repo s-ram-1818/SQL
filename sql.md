@@ -237,7 +237,3 @@ emp_id | emp_name | dept_name
 | SELF JOIN       | Join table with itself (hierarchical)        |
 | NATURAL JOIN    | Join on columns with same name automatically |
 | JOIN ... USING  | Join on specific column with same name       |
-
-```
-
----
