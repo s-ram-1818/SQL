@@ -186,7 +186,7 @@ Eva      | Bob
 
 ## 7. NATURAL JOIN
 
-**Definition:** Automatically joins tables on columns with the same name.
+**Definition:** Automatically joins tables on columns with the same col name.
 
 ```sql
 SELECT *
