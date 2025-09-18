@@ -94,6 +94,8 @@ NULL   | NULL     | Finance
 
 **Definition:** Returns all rows when there is a match in either left or right table. (Use UNION in MySQL)
 
+you can use FULL OUTER JOIN in other platform expect mysql
+
 ```sql
 SELECT e.emp_id, e.emp_name, d.dept_name
 FROM Employees e
