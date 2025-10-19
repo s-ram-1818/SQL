@@ -1,10 +1,4 @@
 
-````markdown
-# 📘 SQL CONSTRAINTS – Complete Guide with Examples
-
-Constraints are rules applied to table columns to ensure **data integrity, validity, and accuracy** in the database.
-
----
 
 ## 🔹 1. PRIMARY KEY
 - Ensures each row is **unique and not NULL**.  
